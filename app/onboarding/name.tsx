@@ -9,14 +9,35 @@ import {
 } from 'react-native';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { signInAnonymously } from 'firebase/auth';
+import { auth } from '../../firebaseConfig';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../../firebaseConfig';
 
 export default function NameScreen() {
   const [name, setName] = useState('');
 
   const handleContinue = async () => {
     if (name.trim()) {
-      await AsyncStorage.setItem('user_name', name.trim());
-      router.push('/onboarding/gender');
+      try {
+        // Anonim oturum aç
+        const userCredential = await signInAnonymously(auth);
+        const user = userCredential.user;
+
+        // Kullanıcı bilgilerini Firestore'a kaydet
+        await setDoc(doc(db, 'users', user.uid), {
+          name: name.trim(),
+          createdAt: new Date(),
+        });
+
+        // AsyncStorage'a da kaydet
+        await AsyncStorage.setItem('user_name', name.trim());
+        
+        console.log('User created with ID:', user.uid);
+        router.push('/onboarding/gender');
+      } catch (error) {
+        console.error('Error creating user:', error);
+      }
     }
   };
 

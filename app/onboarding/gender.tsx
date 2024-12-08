@@ -10,7 +10,14 @@ import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const genderOptions = [
+type GenderOption = {
+  id: string;
+  title: string;
+  icon: keyof typeof MaterialCommunityIcons.glyphMap;
+  multiplier: number;
+};
+
+const genderOptions: GenderOption[] = [
   {
     id: 'male',
     title: 'Erkek',

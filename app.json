@@ -17,8 +17,12 @@
       "permissions": [
         "NOTIFICATIONS",
         "SCHEDULE_EXACT_ALARM",
+        "USE_EXACT_ALARM",
+        "NOTIFICATIONS",
+        "SCHEDULE_EXACT_ALARM",
         "USE_EXACT_ALARM"
-      ]
+      ],
+      "package": "com.anonymous.WaterAssistance"
     },
     "plugins": [
       [
@@ -26,7 +30,8 @@
         {
           "color": "#ffffff"
         }
-      ]
+      ],
+      "react-native-google-mobile-ads"
     ]
   }
 }

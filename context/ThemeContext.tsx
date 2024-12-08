@@ -22,6 +22,7 @@ export const lightColors = {
   progressFill: '#2196F3',
   error: '#F44336',
   warning: '#FFC107',
+  border: '#E0E0E0',
 };
 
 export const darkColors = {
@@ -37,6 +38,7 @@ export const darkColors = {
   progressFill: '#2196F3',
   error: '#EF5350',
   warning: '#FFB300',
+  border: '#333333',
 };
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);

@@ -9,18 +9,43 @@ import {
 } from 'react-native';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { database } from '../../firebaseConfig';
+import { ref, set } from 'firebase/database';
+import { useAuth } from '../../context/auth';
 
 export default function ResultScreen() {
   const [dailyGoal, setDailyGoal] = useState<string>('');
   const fadeAnim = new Animated.Value(0);
   const scaleAnim = new Animated.Value(0.5);
+  const { user } = useAuth();
 
   useEffect(() => {
     const loadGoal = async () => {
       try {
         const goal = await AsyncStorage.getItem('daily_water_goal');
+        const gender = await AsyncStorage.getItem('user_gender');
+        const weight = await AsyncStorage.getItem('user_weight');
+        const activity = await AsyncStorage.getItem('user_activity');
+        const climate = await AsyncStorage.getItem('user_climate');
+        const name = await AsyncStorage.getItem('user_name');
+
         if (goal) {
           setDailyGoal(goal);
+
+          // Firebase Realtime Database'e kullanıcı bilgilerini kaydet
+          if (user?.uid) {
+            const userRef = ref(database, `users/${user.uid}`);
+            await set(userRef, {
+              dailyGoal: parseInt(goal),
+              gender,
+              weight: weight ? parseFloat(weight) : null,
+              activity,
+              climate,
+              name,
+              updatedAt: new Date().toISOString()
+            });
+            console.log('User data updated in Firebase Realtime Database');
+          }
         }
       } catch (error) {
         console.error('Error loading daily goal:', error);
@@ -44,10 +69,10 @@ export default function ResultScreen() {
         useNativeDriver: true,
       }),
     ]).start();
-  }, []);
+  }, [user]);
 
   const handleContinue = () => {
-    router.replace('/');
+    router.replace('/(tabs)');
   };
 
   return (
