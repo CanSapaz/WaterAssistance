@@ -1,0 +1,37 @@
+Android SDK Kurulum Adımları:
+
+1. Sistem Ortam Değişkenleri:
+   - Windows arama çubuğuna "Ortam Değişkenleri" yazın ve "Sistem ortam değişkenlerini düzenle"yi açın
+   - "Ortam Değişkenleri" butonuna tıklayın
+   - "Sistem değişkenleri" bölümünde "Yeni" butonuna tıklayın
+   - Değişken adı: ANDROID_HOME
+   - Değişken değeri: C:\Users\[KullanıcıAdınız]\AppData\Local\Android\Sdk
+   
+2. Path değişkenine eklenecek değerler:
+   - Sistem değişkenleri altında "Path" değişkenini bulun ve "Düzenle"ye tıklayın
+   - "Yeni" butonuna tıklayarak aşağıdaki yolları ekleyin:
+     %ANDROID_HOME%\platform-tools
+     %ANDROID_HOME%\emulator
+     %ANDROID_HOME%\tools
+     %ANDROID_HOME%\tools\bin
+
+3. Android Studio'dan SDK Manager'ı açın:
+   - Tools > SDK Manager
+   - "SDK Platforms" sekmesinde:
+     - Android 13.0 (Tiramisu)'yu seçin
+   - "SDK Tools" sekmesinde:
+     - Android SDK Build-Tools
+     - Android SDK Command-line Tools
+     - Android Emulator
+     - Android SDK Platform-Tools
+     
+4. Değişiklikleri uygulamak için:
+   - Tüm terminal pencerelerini kapatın
+   - Yeni bir terminal açın
+   - Aşağıdaki komutu çalıştırarak adb'nin tanındığını kontrol edin:
+     adb --version
+
+5. Son olarak:
+   - Android Studio'dan bir Android Emulator oluşturun (Tools > Device Manager)
+   - Emulator'ü başlatın
+   - Proje klasöründe "npm run android" komutunu çalıştırın
